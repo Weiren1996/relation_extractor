@@ -36,13 +36,13 @@ if __name__ == '__main__':
     #下载得到文本的储存文件夹路径
     origin_text_path = r'text-out-5000'
     #提取的目标性能名称
-    prop_name = 'solvus'
+    prop_name = 'solidus'
     #创建存放输出文件的文件夹
     mkdir('output')
-    mkdir(r'output\full_text2')
+    mkdir(r'output\full_text')
     
     #经过全文定位之后的文本的储存文件夹路径
-    text_path = r"output\full_text2"
+    text_path = r"output\full_text"
     
     #定位得到的目标语料
     TS_path = r"output\sent.xls"
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     out_path = r"output\all-attributes.xls"
     #筛选获取全文内容
     FT = Filter_text(origin_text_path,text_path)
-    txt_name = FT.process()
+    txt_name,doi_list = FT.process()
     #获取目标语料
     all_x = []
     txt_name2 = []
@@ -108,10 +108,7 @@ if __name__ == '__main__':
                 sht2.write(triple_lines+s,2,out_unit[s][0])
                 sht2.write(triple_lines+s,3,out_unit[s][1])
                 sht2.write(triple_lines+s,4,out_unit[s][2])
-            if out_unit:
-                triple_lines = triple_lines + len(out_unit)
-            else:
-                triple_lines += 1
+            triple_lines = triple_lines + len(out_unit)
             file_index += 1
         else:
             out = 'no target triples'
@@ -125,7 +122,7 @@ if __name__ == '__main__':
             file_index += 1
     xls.save(triple_path)
 #获取流程中所有关键的变量信息
-    attributes = All_attributes(prop_name,txt_name,text_path,triple_path,out_path,C_path)
+    attributes = All_attributes(prop_name,txt_name,text_path,triple_path,out_path,C_path,doi_list)
     attributes.get_toexcel()
     
     

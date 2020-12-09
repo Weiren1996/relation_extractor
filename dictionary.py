@@ -20,6 +20,7 @@ class Dictionary:
         self.unit_replace = eval(cp.get("DICTIONARY",'unit_replace'))
         self.no_unit_para = eval(cp.get("DICTIONARY",'no_unit_para'))
         self.other_quality = eval(cp.get("DICTIONARY",'other_quality'))
+        self.table_alloy_to_replace = eval(cp.get("DICTIONARY",'table_alloy_to_replace'))
         
         
         

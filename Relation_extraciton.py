@@ -39,6 +39,7 @@ class Relation_extraciton:
                 new_word_list.append(word)
 
             new_sent = (' ').join(new_word_list)
+#            print(new_sent,txt,sub_order)
             for s in range(0,len(sub_order)):
                 if sub_order[s] not in new_sent:
                     sub_order.remove(sub_order[s])
