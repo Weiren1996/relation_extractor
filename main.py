@@ -36,13 +36,13 @@ if __name__ == '__main__':
     #下载得到文本的储存文件夹路径
     origin_text_path = r'text-out-5000'
     #提取的目标性能名称
-    prop_name = 'solidus'
+    prop_name = 'solvus'
     #创建存放输出文件的文件夹
     mkdir('output')
-    mkdir(r'output\full_text')
+    mkdir(r'output\full_text2')
     
     #经过全文定位之后的文本的储存文件夹路径
-    text_path = r"output\full_text"
+    text_path = r"output\full_text2"
     
     #定位得到的目标语料
     TS_path = r"output\sent.xls"
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     out_path = r"output\all-attributes.xls"
     #筛选获取全文内容
     FT = Filter_text(origin_text_path,text_path)
-    txt_name,doi_list = FT.process()
+    txt_name = FT.process()
     #获取目标语料
     all_x = []
     txt_name2 = []
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     sht2 = xls.add_sheet("triple_extracion")
     triple_lines = 0 #代表triple的行数
     file_index = 0 #代表文件索引
-    num_of_lines = 0 #代表句子的行数
+    num_of_lines = 0 #代表句子的行数g
     for item in data:
         sht2.write(triple_lines,0,str(file_index)+'.txt')
         if item != []:
@@ -91,11 +91,18 @@ if __name__ == '__main__':
                 sub_order,sub_id,object_list = parse.alloy_sub_search()
                 RE = Relation_extraciton(prop_name,filter_data,sub_order,sub_id,object_list,C_path)
                 all_outcome = RE.triple_extraction()
+                if not all_outcome:
+                    out = 'no target triples'
+                    sht2.write(triple_lines, 2, out)
+                    sht2.write(triple_lines, 3, 'None')
+                    sht2.write(triple_lines, 4, 'None')
+                    sht2.write(num_of_lines, 1, 'no target sentence')
+                    num_of_lines += 1
+
                 n_triple = 0
                 for index,v in all_outcome.items():
                     out_unit.append(v)
                     n_triple += 1
-
 #                sent_out[sent] = out_unit
 
                 for n in range(0,n_triple):
@@ -108,7 +115,10 @@ if __name__ == '__main__':
                 sht2.write(triple_lines+s,2,out_unit[s][0])
                 sht2.write(triple_lines+s,3,out_unit[s][1])
                 sht2.write(triple_lines+s,4,out_unit[s][2])
-            triple_lines = triple_lines + len(out_unit)
+            if out_unit:
+                triple_lines = triple_lines + len(out_unit)
+            else:
+                triple_lines += 1
             file_index += 1
         else:
             out = 'no target triples'
@@ -122,9 +132,8 @@ if __name__ == '__main__':
             file_index += 1
     xls.save(triple_path)
 #获取流程中所有关键的变量信息
-    attributes = All_attributes(prop_name,txt_name,text_path,triple_path,out_path,C_path,doi_list)
+    attributes = All_attributes(prop_name,txt_name,text_path,triple_path,out_path,C_path)
     attributes.get_toexcel()
-
     
     
     

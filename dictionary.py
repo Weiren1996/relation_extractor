@@ -4,10 +4,12 @@ Created on Mon Apr 27 23:15:37 2020
 
 @author: 35732
 """
-from configparser import ConfigParser
+# from configparser import ConfigParser
+import configparser
 class Dictionary:
     def __init__(self,path):#表示配置文件的路径
-        cp = ConfigParser()
+        # cp = ConfigParser()
+        cp = configparser.RawConfigParser()
         cp.read(path,'UTF-8')
         self.replace_word = eval(cp.get("DICTIONARY",'replace_word'))
         self.alloy_to_replace = eval(cp.get("DICTIONARY",'alloy_to_replace'))
@@ -20,7 +22,6 @@ class Dictionary:
         self.unit_replace = eval(cp.get("DICTIONARY",'unit_replace'))
         self.no_unit_para = eval(cp.get("DICTIONARY",'no_unit_para'))
         self.other_quality = eval(cp.get("DICTIONARY",'other_quality'))
-        self.table_alloy_to_replace = eval(cp.get("DICTIONARY",'table_alloy_to_replace'))
         
         
         
