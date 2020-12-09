@@ -124,6 +124,7 @@ if __name__ == '__main__':
 #获取流程中所有关键的变量信息
     attributes = All_attributes(prop_name,txt_name,text_path,triple_path,out_path,C_path,doi_list)
     attributes.get_toexcel()
+    2020.12.09
     
     
     
